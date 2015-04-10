@@ -23,7 +23,7 @@ matrix:
 
 env:
    global:
-      - CPANM_OPTS="-q --skip-satisfied --notest --no-man-pages"
+      - CPANM_OPTS="-q --notest --no-man-pages"
       - DISTS="Dist::Zilla::PluginBundle::RSRCHBOY"
       - PB_LIB="dzil-cache"
 

@@ -1,0 +1,63 @@
+# Travis config for @RsrchBoy's p5 packages.
+#
+# Kinda.
+#
+# Chris Weyl <cweyl@alumni.drew.edu> 2015
+
+# use the docker/container based infrastructure
+sudo: false
+
+language: perl
+perl:
+   - "5.8"
+   - "5.10"
+   - "5.12"
+   - "5.14"
+   - "5.16"
+   - "5.18"
+   - "5.20"
+
+matrix:
+   allow_failures:
+      - perl: "5.8"
+
+env:
+   global:
+      - CPANM_OPTS="-q --skip-satisfied --notest --no-man-pages"
+      - DISTS="Dist::Zilla::PluginBundle::RSRCHBOY"
+      - PB_LIB="dzil-cache"
+
+before_install:
+   # git bits sometimes needed...
+   - git config user.name 'Travis-CI'
+   - git config user.email 'travis@nowhere.dne'
+
+   - perlbrew lib create $PB_LIB
+   - perlbrew switch $PERLBREW_PERL@$PB_LIB
+
+install:
+   # gotta love failing pod tests blowing everything up...
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }
+   - export HARNESS_SUBCLASS=TAP::Harness::Restricted
+
+   # Moose installs in parallel quite nicely.
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= HARNESS_OPTIONS=j8:c cpanm $CPANM_OPTS Moose       || { cat ~/.cpanm/build.log ; false ; }
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= HARNESS_OPTIONS=j8:c cpanm $CPANM_OPTS Dist::Zilla || { cat ~/.cpanm/build.log ; false ; }
+
+   # for DZP LinkCheck
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS CPANPLUS || { cat ~/.cpanm/build.log ; false ; }
+
+script:
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
+
+# NOTE that we don't actually decrypt our keys until after the builds; also
+# that we clear the "encrypted_*" variables before actually invoking external
+# code above.
+
+after_success:
+   - openssl aes-256-cbc -K $encrypted_db9c4e380760_key -iv $encrypted_db9c4e380760_iv -in keys/github_id.enc -out keys/github_id -d
+   - PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB
+   - rm -rf $PB_LIB_DIR/man
+   - mkdir -p tarballs/
+   - tar -C $PERLBREW_HOME/libs/ -jcf tarballs/$PERLBREW_PERL@$PB_LIB.tar.bz2 $PERLBREW_PERL@$PB_LIB
+   - ls -la tarballs/

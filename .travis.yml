@@ -59,6 +59,8 @@ script:
 
 after_success:
    - openssl aes-256-cbc -K $encrypted_db9c4e380760_key -iv $encrypted_db9c4e380760_iv -in keys/github_id.enc -out keys/github_id -d
+   - eval `ssh-agent`
+   - ssh-add ./keys/github_id
    - PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB
    - rm -rf $PB_LIB_DIR/man
    - mkdir -p tarballs/

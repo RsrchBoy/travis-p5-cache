@@ -36,7 +36,7 @@ before_install:
    - TARGET_BRANCH="$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH"
    - git config user.name 'Travis-CI'
    - git config user.email 'travis@nowhere.dne'
-   - git config --add remote.origin.fetch refs/heads/$TARGET_BRANCH:refs/heads/$TARGET_BRANCH
+   - git config remote.origin.fetch --add 'refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH'
    - git config url.git@github.com:.pushInsteadOf git://github.com/
 
    # make sure we're wiping the vars effectively...
@@ -71,6 +71,7 @@ after_success:
    - ssh-add ./keys/github_id
    - git checkout $TRAVIS_BRANCH
    - git fetch --unshallow
+   - git fetch
    - git checkout $TARGET_BRANCH || ( git checkout --orphan $TARGET_BRANCH; git reset; rm -rf * )
    - PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB
    - rm -rf $PB_LIB_DIR/man

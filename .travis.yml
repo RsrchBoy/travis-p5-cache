@@ -39,13 +39,13 @@ before_install:
    - git config remote.origin.fetch --add 'refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH'
    - git config url.git@github.com:.pushInsteadOf git://github.com/
 
-   # make sure we're wiping the vars effectively...
-   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Test::NoTravisEncVars
-
    - perlbrew lib create $PB_LIB
    - perlbrew switch $PERLBREW_PERL@$PB_LIB
 
 install:
+   # make sure we're wiping the vars effectively...
+   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Test::NoTravisEncVars
+
    # gotta love failing pod tests blowing everything up...
    - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }
    - export HARNESS_SUBCLASS=TAP::Harness::Restricted

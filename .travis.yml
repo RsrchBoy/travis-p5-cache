@@ -36,7 +36,7 @@ before_install:
    - TARGET_BRANCH="$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH"
    - git config user.name 'Travis-CI'
    - git config user.email 'travis@nowhere.dne'
-   - git config remote.origin.fetch --add 'refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH'
+   - git config --add remote.origin.fetch "refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"
    - git config url.git@github.com:.pushInsteadOf git://github.com/
 
    - perlbrew lib create $PB_LIB

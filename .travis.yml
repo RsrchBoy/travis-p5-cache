@@ -21,6 +21,10 @@ matrix:
    allow_failures:
       - perl: "5.8"
 
+branches:
+   only:
+      - master
+
 env:
    global:
       - CPANM_OPTS="-q --notest --no-man-pages"

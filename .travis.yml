@@ -63,4 +63,4 @@ after_success:
    - rm -rf $PB_LIB_DIR/man
    - mkdir -p tarballs/
    - tar -C $PERLBREW_HOME/libs/ -jcf tarballs/$PERLBREW_PERL@$PB_LIB.tar.bz2 $PERLBREW_PERL@$PB_LIB
-   - ls -la tarballs/
+   - ls -lah tarballs/

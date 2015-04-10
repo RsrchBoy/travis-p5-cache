@@ -33,6 +33,7 @@ before_install:
    - git config user.name 'Travis-CI'
    - git config user.email 'travis@nowhere.dne'
    - git config --add remote.origin.fetch refs/heads/$TARGET_BRANCH:refs/heads/$TARGET_BRANCH
+   - git config url.git@github.com:.pushInsteadOf git://github.com/
 
    # make sure we're wiping the vars effectively...
    - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Test::NoTravisEncVars

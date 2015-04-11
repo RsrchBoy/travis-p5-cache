@@ -1,0 +1,20 @@
+# eval this in your before_install phase to use the cache locally.
+#
+# Note you'll need this variable set to something like this:
+#- CPANM_OPTS="-q --notest --no-man-pages"
+
+# pull down our cache
+export PB_LIB="dzil-cache"
+export PB_TARBALL="$PERLBREW_PERL@$PB_LIB.tar.bz2"
+perlbrew lib create $PB_LIB
+wget -O $PB_TARBALL "https://github.com/RsrchBoy/travis-p5-cache/blob/$PERLBREW_PERL@$PB_LIB/master/$PB_TARBALL?raw=true"
+test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
+perlbrew switch $PERLBREW_PERL@$PB_LIB
+rm $PB_TARBALL
+
+# gotta love failing pod tests blowing everything up...
+export HARNESS_SUBCLASS=TAP::Harness::Restricted
+
+# Moose installs in parallel quite nicely.
+HARNESS_OPTIONS=j8:c cpanm $CPANM_OPTS Moose       || { cat ~/.cpanm/build.log ; false ; }
+HARNESS_OPTIONS=j8:c cpanm $CPANM_OPTS Dist::Zilla || { cat ~/.cpanm/build.log ; false ; }

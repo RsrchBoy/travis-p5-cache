@@ -1,0 +1,12 @@
+# eval this in your before_install phase to use the cache locally.
+
+# NOTE: these can be overridden simply by setting them
+export CPANM_OPTS=${CPANM_OPTS:- -q --notest --no-man-pages}
+export PB_LIB=${PB_LIB:-dzil-cache}
+export PB_TARBALL=${PT_TARBALL:-$PERLBREW_PERL@$PB_LIB.tar.bz2}
+
+# in case we're run without --notest
+export HARNESS_SUBCLASS=TAP::Harness::Restricted
+
+perlbrew lib create $PB_LIB
+perlbrew switch $PERLBREW_PERL@$PB_LIB

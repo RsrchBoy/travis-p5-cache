@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Run tests in a dzil-based distribution.
+
+set -ex
+
+# don't try to create a SIGNATURE, in case that dzil plugin is in place:
+export DZSIGN=archive
+unset HARNESS_SUBCLASS
+
+dzil test --all

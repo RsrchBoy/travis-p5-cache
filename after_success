@@ -2,6 +2,9 @@
 
 set -ex
 
+# ensure we have that which we need...
+cpanm $CPANM_OPTS Devel::Cover Devel::Cover::Report::Coveralls
+
 # if built-dist exists, then we're a dzil dist and were built/tested in there
 [ -d built-dist ] && cd built-dist
 

@@ -61,6 +61,7 @@ install:
 
 script:
    - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
+   - echo yes | encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpan
 
 # NOTE that we don't actually decrypt our keys until after the builds; also
 # that we clear the "encrypted_*" variables before actually invoking external

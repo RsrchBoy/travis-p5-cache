@@ -4,9 +4,12 @@
 
 set -ex
 
-# not so much install our package as all its prereqs
-cpanm --with-develop --skip-satisfied $CPANM_OPTS --installdeps . 2>&1 | grep -v 'Ignoring unknown extended header keyword'
-dzil authordeps --missing        | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
-dzil listdeps --author --missing | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
+if [ "$INSTALL_DEPS_VIA_DZIL" = "" ] ; then
+    # not so much install our package as all its prereqs
+    cpanm --with-develop --skip-satisfied $CPANM_OPTS --installdeps . 2>&1 | grep -v 'Ignoring unknown extended header keyword'
+else
+    dzil authordeps --missing        | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
+    dzil listdeps --author --missing | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
+fi
 
 dzil build --in built-dist

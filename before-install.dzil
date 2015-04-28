@@ -17,5 +17,8 @@ wget -O $PB_TARBALL "https://github.com/RsrchBoy/travis-p5-cache/blob/$PERLBREW_
 test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
 rm $PB_TARBALL
 
+# setup cpan
+echo yes | cpan
+
 # for DZP LinkCheck
 cpanp x

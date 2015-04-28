@@ -8,3 +8,5 @@ set -ex
 cpanm --with-develop --skip-satisfied $CPANM_OPTS --installdeps . 2>&1 | grep -v 'Ignoring unknown extended header keyword'
 dzil authordeps --missing        | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
 dzil listdeps --author --missing | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
+
+dzil build --in built-dist

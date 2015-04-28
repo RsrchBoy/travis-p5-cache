@@ -8,4 +8,9 @@ set -ex
 export DZSIGN=archive
 unset HARNESS_SUBCLASS
 
-dzil test --all
+#dzil test --all
+[ -d built-dist ] && cd built-dist
+
+export AUTOMATED_TESTING=1 RELEASE_TESTING=1 AUTHOR_TESTING=1
+perl Makefile.PL
+make test

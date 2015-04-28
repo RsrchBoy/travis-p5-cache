@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -ex
+
+# if built-dist exists, then we're a dzil dist and were built/tested in there
+[ -d built-dist ] && cd built-dist
+
+unset RELEASE_TESTING AUTHOR_TESTING
+HARNESS_PERL_SWITCHES="-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine" prove -lsrv t
+cover -summary
+cover -report coveralls

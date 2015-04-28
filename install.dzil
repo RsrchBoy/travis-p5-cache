@@ -13,4 +13,4 @@ else
     dzil listdeps --author --missing | xargs -t cpanm $CPANM_OPTS --skip-satisfied || { cat ~/.cpanm/build.log ; false ; }
 fi
 
-dzil build --in built-dist
+[ -e dist.ini ] && dzil build --in built-dist

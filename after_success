@@ -9,6 +9,6 @@ cpanm $CPANM_OPTS Devel::Cover Devel::Cover::Report::Coveralls
 [ -d built-dist ] && cd built-dist
 
 unset RELEASE_TESTING AUTHOR_TESTING
-HARNESS_PERL_SWITCHES="-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine" prove -lsrv t
+HARNESS_PERL_SWITCHES="-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine" prove -lsr t
 cover -summary
 cover -report coveralls

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -ex
+
+# set a number of vars to indicate that no one is driving
+export AUTOMATED_TESTING=1
+export RELEASE_TESTING=1
+export AUTHOR_TESTING=1
+export NONINTERACTIVE_TESTING=1
+
+# common git bits sometimes needed
+git config user.name 'Travis-CI'
+git config user.email 'travis@nowhere.dne'
+
+# pull down our cache
+wget -O $PB_TARBALL "https://github.com/RsrchBoy/travis-p5-cache/blob/$PERLBREW_PERL@$PB_LIB/master/$PB_TARBALL?raw=true"
+test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
+rm $PB_TARBALL
+
+# setup cpan
+echo yes | cpan > /dev/null
+
+# for DZP LinkCheck
+cpanp x

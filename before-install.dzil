@@ -18,7 +18,7 @@ test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
 rm $PB_TARBALL
 
 # setup cpan
-echo yes | cpan
+echo yes | cpan > /dev/null
 
 # for DZP LinkCheck
 cpanp x

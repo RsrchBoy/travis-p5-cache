@@ -32,10 +32,10 @@ env:
       - CPANM_OPTS="-q --notest --no-man-pages"
       - DISTS="Dist::Zilla::PluginBundle::RSRCHBOY Text::Wrap Task::BeLike::RSRCHBOY DBIx::Class::Schema::Loader"
       - PB_LIB="dzil-cache"
+      - TARGET_BRANCH="$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH"
 
 before_install:
    # git bits sometimes needed...
-   - TARGET_BRANCH="$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH"
    - git config user.name 'Travis-CI'
    - git config user.email 'travis@nowhere.dne'
    - git config --add remote.origin.fetch "refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"

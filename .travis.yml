@@ -46,22 +46,22 @@ before_install:
 
 install:
    # make sure we're wiping the vars effectively...
-   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Test::NoTravisEncVars
+   - encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS Test::NoTravisEncVars
 
    # gotta love failing pod tests blowing everything up...
-   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }
+   - encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }
    - export HARNESS_SUBCLASS=TAP::Harness::Restricted
 
    # Moose installs in parallel quite nicely.
-   - HARNESS_OPTIONS=j8:c encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Moose       || { cat ~/.cpanm/build.log ; false ; }
-   - HARNESS_OPTIONS=j8:c encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS Dist::Zilla || { cat ~/.cpanm/build.log ; false ; }
+   - HARNESS_OPTIONS=j8:c encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS Moose       || { cat ~/.cpanm/build.log ; false ; }
+   - HARNESS_OPTIONS=j8:c encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS Dist::Zilla || { cat ~/.cpanm/build.log ; false ; }
 
    # for DZP LinkCheck
-   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS CPANPLUS || { cat ~/.cpanm/build.log ; false ; }
+   - encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS CPANPLUS || { cat ~/.cpanm/build.log ; false ; }
 
 script:
-   - encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
-   - echo yes | encrypted_db9c4e380760_key= encrypted_db9c4e380760_iv= cpan
+   - encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
+   - echo yes | encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpan
 
 # NOTE that we don't actually decrypt our keys until after the builds; also
 # that we clear the "encrypted_*" variables before actually invoking external

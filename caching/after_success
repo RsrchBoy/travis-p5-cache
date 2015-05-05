@@ -3,7 +3,16 @@
 set -ex
 
 # our target branch -- unless it has been set elsewhere
-TARGET_BRANCH=${$TARGET_BRANCH:-$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH}
+PB_ID=$PERLBREW_PERL@$PB_LIB
+TARGET_BRANCH=${TARGET_BRANCH:-$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH}
+PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB
+PB_TARBALL=$PERLBREW_PERL@$PB_LIB.tar.bz2
+FILES=".travis.yml $PB_TARBALL"
+
+# create our cache tarball
+rm -rf $PB_LIB_DIR/man
+tar -C $PERLBREW_HOME/libs/ -jcf $PB_TARBALL $PERLBREW_PERL@$PB_LIB
+ls -lah $PB_TARBALL
 
 # decrypt our deploy key; make it available
 openssl aes-256-cbc -K $encrypted_a0b0a2d64b79_key -iv $encrypted_a0b0a2d64b79_iv -in keys/github_id.enc -out keys/github_id -d
@@ -14,20 +23,42 @@ ssh-add ./keys/github_id
 # git bits sometimes needed...
 git config user.name  'p5 cache committer'
 git config user.email 'travis@nowhere.dne'
-git config --add remote.origin.fetch "refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"
+#git config --add remote.origin.fetch "refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"
 git config url.git@github.com:.pushInsteadOf git://github.com/
 
 # get a "whole repo" -- FIXME do we need this?
-git checkout $TRAVIS_BRANCH
-git fetch --unshallow ||:
-git fetch
+#git checkout $TRAVIS_BRANCH
+#git fetch --unshallow ||:
+#git fetch
+
+# temp file for building out our tree...
+_tf=`mktemp`
+
+# add our build product to the repo -- now with PLUMBING!
+for i in $FILES ; do
+    echo -n '100644 blob ' >> $_tf
+    git hash-object -w $i | sed -e "s/$/\t$i/" >> $_tf
+done
+
+# juuust to see it
+cat $_tf
+
+# make our actual tree object
+_tree=`cat $_tf | git mktree`
+echo our tree is: $_tree
+
+# see if we can't find/fetch any existing $TARGET_BRANCH of ours (parent!)
+git fetch origin $TARGET_BRANCH && _p="-p FETCH_HEAD"
+
+# create our commit
+_tip=`git commit-tree $_tree $_p -m "Cache: $PB_ID"`
+echo $_tip
+
+# and push!
+git push origin $_tip:$TARGET_BRANCH
 
 # create the branch to hold the cache tarball
-git checkout $TARGET_BRANCH || ( git checkout --orphan $TARGET_BRANCH; git reset; rm -rf * )
-PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB
-PB_TARBALL=$PERLBREW_PERL@$PB_LIB.tar.bz2
-rm -rf $PB_LIB_DIR/man
-tar -C $PERLBREW_HOME/libs/ -jcf $PB_TARBALL $PERLBREW_PERL@$PB_LIB
-ls -lah $PB_TARBALL
-git add $PB_TARBALL && git commit -m "add $PB_TARBALL"
-git push -u origin $TARGET_BRANCH:$TARGET_BRANCH
+#git checkout $TARGET_BRANCH || ( git checkout --orphan $TARGET_BRANCH; git reset; rm -rf * )
+
+#git add $PB_TARBALL && git commit -m "add $PB_TARBALL"
+#git push -u

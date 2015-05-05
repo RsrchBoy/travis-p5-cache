@@ -2,11 +2,20 @@
 
 set -ex
 
+# our target branch -- unless it has been set elsewhere
+TARGET_BRANCH=${$TARGET_BRANCH:-$PERLBREW_PERL@$PB_LIB/$TRAVIS_BRANCH}
+
 # decrypt our deploy key; make it available
 openssl aes-256-cbc -K $encrypted_a0b0a2d64b79_key -iv $encrypted_a0b0a2d64b79_iv -in keys/github_id.enc -out keys/github_id -d
 chmod 0600 keys/github_id
 eval `ssh-agent`
 ssh-add ./keys/github_id
+
+# git bits sometimes needed...
+git config user.name  'p5 cache committer'
+git config user.email 'travis@nowhere.dne'
+git config --add remote.origin.fetch "refs/heads/$TARGET_BRANCH:refs/remotes/origin/$TARGET_BRANCH"
+git config url.git@github.com:.pushInsteadOf git://github.com/
 
 # get a "whole repo" -- FIXME do we need this?
 git checkout $TRAVIS_BRANCH

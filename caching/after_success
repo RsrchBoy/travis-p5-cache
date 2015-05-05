@@ -2,12 +2,12 @@
 
 set -ex
 
-openssl aes-256-cbc -K $encrypted_db9c4e380760_key -iv $encrypted_db9c4e380760_iv -in keys/github_id.enc -out keys/github_id -d
+openssl aes-256-cbc -K $encrypted_a0b0a2d64b79_key -iv $encrypted_a0b0a2d64b79_iv -in keys/github_id.enc -out keys/github_id -d
 chmod 0600 keys/github_id
 eval `ssh-agent`
 ssh-add ./keys/github_id
 git checkout $TRAVIS_BRANCH
-git fetch --unshallow
+git fetch --unshallow ||:
 git fetch
 git checkout $TARGET_BRANCH || ( git checkout --orphan $TARGET_BRANCH; git reset; rm -rf * )
 PB_LIB_DIR=$PERLBREW_HOME/libs/$PERLBREW_PERL@$PB_LIB

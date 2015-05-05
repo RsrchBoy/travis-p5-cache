@@ -10,3 +10,5 @@ export HARNESS_SUBCLASS=TAP::Harness::Restricted
 
 perlbrew lib create $PB_LIB
 perlbrew switch $PERLBREW_PERL@$PB_LIB
+
+# vim: set ft=sh :

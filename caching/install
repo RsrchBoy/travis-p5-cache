@@ -2,11 +2,9 @@
 
 set -ex
 
-# drop our encryption keys and vars
+# drop our encryption keys and vars and validate
 unset `set | grep ^encrypted | awk -F= '{ print $1 }'`
-
-# make sure we're wiping the vars effectively...
-cpanm $CPANM_OPTS Test::NoTravisEncVars
+cpanm -v --no-man-pages Test::NoTravisEncVars
 
 # gotta love failing pod tests blowing everything up...
 cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }

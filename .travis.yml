@@ -1,6 +1,4 @@
-# Travis config for @RsrchBoy's p5 packages.
-#
-# Kinda.
+# Travis config for *building* p5/perlbrew cache tarballs.
 #
 # Chris Weyl <cweyl@alumni.drew.edu> 2015
 

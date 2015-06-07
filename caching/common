@@ -1,5 +1,6 @@
 #!/bin/sh
 
 # drop our encryption keys and vars and validate
-set `set | grep ^encrypted | awk -F= '{ print $1 }'`
+unset `set | grep ^encrypted | awk -F= '{ print $1 }'`
+cpanm $CPANM_OPTS --installdeps Test::NoTravisEncVars || { cat ~/.cpanm/build.log ; false ; }
 cpanm -v --no-man-pages --reinstall Test::NoTravisEncVars

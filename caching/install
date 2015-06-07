@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -ex
-source caching/common
+. caching/common
 
 # gotta love failing pod tests blowing everything up...
 cpanm $CPANM_OPTS TAP::Harness::Restricted || { cat ~/.cpanm/build.log ; false ; }

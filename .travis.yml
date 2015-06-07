@@ -39,10 +39,7 @@ before_install:
    - perlbrew switch $PERLBREW_PERL@$PB_LIB
 
 install: caching/install
-
-script:
-   - encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
-   - echo yes | encrypted_a0b0a2d64b79_key= encrypted_a0b0a2d64b79_iv= cpan
+script:  caching/script
 
 # NOTE that we don't actually decrypt our keys until after the builds; also
 # that we clear the "encrypted_*" variables before actually invoking external

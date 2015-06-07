@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -ex
+source caching/common
+
+# install/upgrade the bulk of our dists
+cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
+
+# setup cpan -- necessary for some tests/packages to have this configured;
+# defaults are just dandy
+echo yes | cpan

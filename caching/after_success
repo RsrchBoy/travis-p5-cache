@@ -59,7 +59,7 @@ _tip=`git commit-tree $_tree $_p -m "Cache: $PB_ID"`
 echo $_tip
 
 # and push!
-git push origin $_tip:$TARGET_BRANCH
+git push origin $_tip:refs/heads/$TARGET_BRANCH
 
 # create the branch to hold the cache tarball
 #git checkout $TARGET_BRANCH || ( git checkout --orphan $TARGET_BRANCH; git reset; rm -rf * )

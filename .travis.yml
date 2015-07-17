@@ -4,6 +4,10 @@
 
 # use the docker/container based infrastructure
 sudo: false
+addons:
+   apt:
+      packages:
+         - s3cmd
 
 language: perl
 perl:

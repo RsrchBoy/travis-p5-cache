@@ -46,3 +46,5 @@ script:  caching/script
 # code above.
 
 after_success: caching/after_success
+
+# vim: ts=3 sw=3

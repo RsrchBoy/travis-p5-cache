@@ -15,8 +15,9 @@ help:
 
 .PHONY: encrypt
 
-encrypt: s3cmd.enc
+encrypt: s3cfg.enc
 
-s3cmd.enc: s3cfg
-	travis encrypt-file s3cfg s3cfg.enc -w s3cfg --force
+s3cfg.enc: s3cfg
+	travis encrypt-file $< -w $@ --force
+	git commit -m 'update encrypted file $<' $@
 

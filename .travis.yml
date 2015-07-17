@@ -29,8 +29,8 @@ matrix:
       - perl: "5.22"
 
 branches:
-   only:
-      - master
+   except:
+      - /@dzil-cache/
 
 env:
    global:

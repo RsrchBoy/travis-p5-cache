@@ -4,6 +4,10 @@
 
 # use the docker/container based infrastructure
 sudo: false
+addons:
+   apt:
+      packages:
+         - s3cmd
 
 language: perl
 perl:
@@ -25,8 +29,8 @@ matrix:
       - perl: "5.22"
 
 branches:
-   only:
-      - master
+   except:
+      - /@dzil-cache/
 
 env:
    global:

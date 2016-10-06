@@ -2,7 +2,6 @@
 #
 # Chris Weyl <cweyl@alumni.drew.edu> 2015
 
-
 # use the docker/container based infrastructure
 sudo: false
 addons:

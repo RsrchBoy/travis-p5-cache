@@ -17,6 +17,11 @@ wget -O $PB_TARBALL "http://travis-p5.objects.dreamhost.com/master/$PB_TARBALL"
 test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
 rm $PB_TARBALL
 
+# ...and our
+wget -O $PB_DZIL_TARBALL "http://travis-p5.objects.dreamhost.com/master/$PB_DZIL_TARBALL"
+test -f "$PB_DZIL_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_DZIL_TARBALL | wc -l
+rm $PB_DZIL_TARBALL
+
 # setup cpan
 echo yes | cpan > /dev/null
 

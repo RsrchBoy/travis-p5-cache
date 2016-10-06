@@ -12,6 +12,8 @@ export PB_DZIL_TARBALL=${PB_DZIL_TARBALL:-$PB_DZIL_PERL@$PB_LIB.tar.bz2}
 export HARNESS_SUBCLASS=TAP::Harness::Restricted
 
 perlbrew lib create $PB_LIB
+perlbrew switch $PB_DZIL_PERL
+perlbrew lib create $PB_LIB
 perlbrew switch $PERLBREW_PERL@$PB_LIB
 
 # vim: set ft=sh :

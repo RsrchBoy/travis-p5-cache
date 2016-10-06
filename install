@@ -8,7 +8,7 @@ set -ex
 perlbrew list
 
 # change to a newer Perl, just for dzil
-perlbrew use $PB_DZIL_PERL
+perlbrew switch $PB_DZIL_PERL@$PB_LIB
 
 if [ "$INSTALL_DEPS_VIA_DZIL" = "" ] ; then
     # not so much install our package as all its prereqs
@@ -21,4 +21,4 @@ fi
 
 [ -e dist.ini ] && dzil build --in built-dist
 
-perlbrew use $TRAVIS_PERL_VERSION
+perlbrew switch $TRAVIS_PERL_VERSION@$PB_LIB

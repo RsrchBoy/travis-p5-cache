@@ -5,7 +5,7 @@ export CPANM_OPTS=${CPANM_OPTS:- -q --notest --no-man-pages}
 export PB_LIB=${PB_LIB:-dzil-cache}
 export PB_TARBALL=${PT_TARBALL:-$PERLBREW_PERL@$PB_LIB.tar.bz2}
 
-export PB_DZIL_PERL=${PV_DZIL_PERL:-5.22}
+export PB_DZIL_PERL=${PV_DZIL_PERL:-5.20}
 export PB_DZIL_TARBALL=${PB_DZIL_TARBALL:-$PB_DZIL_PERL@$PB_LIB.tar.bz2}
 
 # in case we're run without --notest

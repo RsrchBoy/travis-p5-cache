@@ -11,6 +11,7 @@ export NONINTERACTIVE_TESTING=1
 # set up our library structure
 perlbrew lib create $PB_LIB
 perlbrew switch $PB_DZIL_PERL
+source $HOME/perl5/perlbrew/etc/bashrc
 perlbrew lib create $PB_LIB
 
 # common git bits sometimes needed
@@ -19,17 +20,20 @@ git config user.email 'travis@nowhere.dne'
 
 # pull down our cache
 perlbrew switch $PERLBREW_PERL@$PB_LIB
+source $HOME/perl5/perlbrew/etc/bashrc
 wget -O $PB_TARBALL "http://travis-p5.objects.dreamhost.com/master/$PB_TARBALL"
 test -f "$PB_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_TARBALL | wc -l
 rm $PB_TARBALL
 
 # ...and our
 perlbrew switch $PB_DZIL_PERL@$PB_LIB
+source $HOME/perl5/perlbrew/etc/bashrc
 wget -O $PB_DZIL_TARBALL "http://travis-p5.objects.dreamhost.com/master/$PB_DZIL_TARBALL"
 test -f "$PB_DZIL_TARBALL" && tar -C $PERLBREW_HOME/libs -jvxf $PB_DZIL_TARBALL | wc -l
 rm $PB_DZIL_TARBALL
 
 perlbrew switch $PERLBREW_PERL@$PB_LIB
+source $HOME/perl5/perlbrew/etc/bashrc
 
 # setup cpan
 echo yes | cpan > /dev/null

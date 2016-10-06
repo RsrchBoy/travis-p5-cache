@@ -9,6 +9,7 @@ perlbrew list
 
 # change to a newer Perl, just for dzil
 perlbrew switch $PB_DZIL_PERL@$PB_LIB
+source $HOME/perl5/perlbrew/etc/bashrc
 
 if [ "$INSTALL_DEPS_VIA_DZIL" = "" ] ; then
     # not so much install our package as all its prereqs
@@ -22,3 +23,4 @@ fi
 [ -e dist.ini ] && dzil build --in built-dist
 
 perlbrew switch $TRAVIS_PERL_VERSION@$PB_LIB
+source $HOME/perl5/perlbrew/etc/bashrc

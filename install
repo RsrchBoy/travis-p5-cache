@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # an install stanza to install dependencies of a dzil-based distribution.
 

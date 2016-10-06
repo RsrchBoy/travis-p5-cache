@@ -4,6 +4,9 @@
 
 set -ex
 
+# sanity...
+perlbrew list
+
 # change to a newer Perl, just for dzil
 perlbrew use $PB_DZIL_PERL
 

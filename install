@@ -8,6 +8,8 @@ set -ex
 perlbrew list
 
 # change to a newer Perl, just for dzil
+perlbrew switch $PB_DZIL_PERL
+perlbrew lib create $PB_LIB
 perlbrew switch $PB_DZIL_PERL@$PB_LIB
 
 if [ "$INSTALL_DEPS_VIA_DZIL" = "" ] ; then

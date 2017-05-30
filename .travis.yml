@@ -25,7 +25,6 @@ perl:
 matrix:
    allow_failures:
       - perl: "5.8"
-      - perl: "5.23"
 
 branches:
    except:

@@ -4,7 +4,7 @@ set -ex
 . caching/common
 
 # install/upgrade the bulk of our dists
-cpanm $CPANM_OPTS --force Dist::Zilla::PluginBundle::RsrchBoy
+cpanm $CPANM_OPTS --force Dist::Zilla::PluginBundle::RSRCHBOY
 for dist in $DISTS ; do
     cpanm $CPANM_OPTS $dist || { cat ~/.cpanm/build.log ; false ; }
 done

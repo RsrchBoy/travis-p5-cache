@@ -4,7 +4,10 @@ set -ex
 . caching/common
 
 # install/upgrade the bulk of our dists
-cpanm $CPANM_OPTS $DISTS || { cat ~/.cpanm/build.log ; false ; }
+cpanm $CPANM_OPTS --force Dist::Zilla:PluginBundle::RsrchBoy
+for dist in $DISTS ; do
+    cpanm $CPANM_OPTS $dist || { cat ~/.cpanm/build.log ; false ; }
+done
 
 # setup cpan -- necessary for some tests/packages to have this configured;
 # defaults are just dandy
